@@ -16,6 +16,7 @@
 
 package net.simonvt.datepicker;
 
+import android.graphics.ColorFilter;
 import net.simonvt.calendarview.CalendarView;
 import net.simonvt.numberpicker.NumberPicker;
 
@@ -692,6 +693,12 @@ public class DatePicker extends FrameLayout {
      */
     public int getDayOfMonth() {
         return mCurrentDate.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public void setColorFilter(ColorFilter colorFilter) {
+        mYearSpinner.setColorFilter(colorFilter);
+        mMonthSpinner.setColorFilter(colorFilter);
+        mDaySpinner.setColorFilter(colorFilter);
     }
 
     /**
