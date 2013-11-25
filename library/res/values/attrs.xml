@@ -22,5 +22,7 @@
         <attr name="dp_maxDate" format="string" />
         <!-- @hide The layout of the date picker. -->
         <attr name="dp_internalLayout" format="reference"  />
+        <!-- @hide Spinner custom order. d:day, M:month, y:year -->
+        <attr name="dp_spinnerOrder" format="string|reference" />
     </declare-styleable>
 </resources>

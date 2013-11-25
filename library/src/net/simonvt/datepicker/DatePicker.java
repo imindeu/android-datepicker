@@ -125,6 +125,8 @@ public class DatePicker extends FrameLayout {
 
     private boolean mIsEnabled = DEFAULT_ENABLED_STATE;
 
+    private char[] spinnerOrder;
+
     /**
      * The callback used to indicate the user changes\d the date.
      */
@@ -169,6 +171,10 @@ public class DatePicker extends FrameLayout {
         String maxDate = attributesArray.getString(R.styleable.DatePicker_dp_maxDate);
         int layoutResourceId = attributesArray.getResourceId(R.styleable.DatePicker_dp_internalLayout,
                 R.layout.date_picker_holo);
+        String spinnerOrderStr = attributesArray.getString(R.styleable.DatePicker_dp_spinnerOrder);
+        spinnerOrder = spinnerOrderStr != null ? spinnerOrderStr.toCharArray() : DateFormat.getDateFormatOrder(context);
+        if (spinnerOrder.length != 3)
+            throw new IllegalArgumentException("Invalid date order: " + Arrays.toString(spinnerOrder));
         attributesArray.recycle();
 
         LayoutInflater inflater = (LayoutInflater) context
@@ -513,10 +519,9 @@ public class DatePicker extends FrameLayout {
      */
     private void reorderSpinners() {
         mSpinners.removeAllViews();
-        char[] order = DateFormat.getDateFormatOrder(getContext());
-        final int spinnerCount = order.length;
+        final int spinnerCount = spinnerOrder.length;
         for (int i = 0; i < spinnerCount; i++) {
-            switch (order[i]) {
+            switch (spinnerOrder[i]) {
                 case DateFormat.DATE:
                     mSpinners.addView(mDaySpinner);
                     setImeOptions(mDaySpinner, spinnerCount, i);
@@ -530,7 +535,7 @@ public class DatePicker extends FrameLayout {
                     setImeOptions(mYearSpinner, spinnerCount, i);
                     break;
                 default:
-                    throw new IllegalArgumentException();
+                    throw new IllegalArgumentException("Invalid spinner order character!");
             }
         }
     }
