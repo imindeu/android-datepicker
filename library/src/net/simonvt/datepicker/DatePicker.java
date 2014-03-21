@@ -16,6 +16,7 @@
 
 package net.simonvt.datepicker;
 
+import android.annotation.TargetApi;
 import android.graphics.ColorFilter;
 import net.simonvt.calendarview.CalendarView;
 import net.simonvt.numberpicker.NumberPicker;
@@ -152,6 +153,7 @@ public class DatePicker extends FrameLayout {
         this(context, attrs, R.attr.datePickerStyle);
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public DatePicker(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
@@ -397,24 +399,30 @@ public class DatePicker extends FrameLayout {
 
     @Override
     public void onPopulateAccessibilityEvent(AccessibilityEvent event) {
-        super.onPopulateAccessibilityEvent(event);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            super.onPopulateAccessibilityEvent(event);
 
-        final int flags = DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR;
-        String selectedDateUtterance = DateUtils.formatDateTime(getContext(),
-                mCurrentDate.getTimeInMillis(), flags);
-        event.getText().add(selectedDateUtterance);
+            final int flags = DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR;
+            String selectedDateUtterance = DateUtils.formatDateTime(getContext(),
+                    mCurrentDate.getTimeInMillis(), flags);
+            event.getText().add(selectedDateUtterance);
+        }
     }
 
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
-        super.onInitializeAccessibilityEvent(event);
-        event.setClassName(DatePicker.class.getName());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            super.onInitializeAccessibilityEvent(event);
+            event.setClassName(DatePicker.class.getName());
+        }
     }
 
     @Override
     public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
-        super.onInitializeAccessibilityNodeInfo(info);
-        info.setClassName(DatePicker.class.getName());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            super.onInitializeAccessibilityNodeInfo(info);
+            info.setClassName(DatePicker.class.getName());
+        }
     }
 
     @Override
