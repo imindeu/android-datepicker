@@ -791,6 +791,12 @@ public class DatePicker extends FrameLayout {
         }
     }
 
+    public void clearAnimation() {
+        mYearSpinner.clearAnimation();
+        mMonthSpinner.clearAnimation();
+        mDaySpinner.clearAnimation();
+    }
+
     /**
      * Class for managing state storing/restoring.
      */
